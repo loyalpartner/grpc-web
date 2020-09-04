@@ -50,12 +50,13 @@ const request = new QueryBooksRequest();
 request.setAuthorPrefix("Geor");
 
 const grpcRequest = grpc.invoke(BookService.QueryBooks, {
+  request,
   host: "https://example.com:9100",
   metadata: new grpc.Metadata({"HeaderTestKey1": "ClientValue1"}),
-  onHeaders: ((headers: grpc.Metadata) => {
+  onHeaders: (headers: grpc.Metadata) => {
     console.log("onHeaders", headers);
   },
-  onMessage: ((message: Book) => {
+  onMessage: (message: Book) => {
     console.log("onMessage", message);
   },
   onEnd: ((status: grpc.Code, statusMessage: string, trailers: grpc.Metadata) => {
